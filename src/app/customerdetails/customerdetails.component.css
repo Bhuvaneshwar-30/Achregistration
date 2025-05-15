@@ -1,0 +1,132 @@
+/* header{
+    background-color: #f60;
+    display: inline-block;
+}
+
+.container {
+    display: grid;
+    width: 90%;
+    margin: auto;
+    background-color: rgb(243, 212, 171);
+  }
+  h2 {
+    background-color: #f60;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  table {
+    width: 100%;
+    border-spacing: 10px;
+  }
+  td {
+    vertical-align: top;
+  }
+  input, select {
+    width: 95%;
+    padding: 5px;
+  }
+  .section-title {
+    font-weight: bold;
+    margin-top: 20px;
+    background-color: antiquewhite;
+    padding: 10px;
+  }
+  .buttons {
+    margin-top: 20px;
+  }
+  .buttons button {
+    padding: 10px 15px;
+    margin-right: 10px;
+  }
+
+  .row{
+    background-color: aliceblue;
+  }
+  .section-title-title{
+    font-weight: bold;
+    margin-top: 5px;
+    background-color: antiquewhite;
+    padding: 10px;
+
+  }
+
+        
+
+
+  
+
+         */
+
+.tblcol{
+  padding: 8px;
+  text-align:center;
+  border: 1px solid black;  
+  font-size: smaller;
+  background-color: rgb(225, 227, 227);
+}
+
+.table-head{
+  padding: 8px;
+  background-color: rgb(251, 238, 221);
+  font-weight: 700;
+}
+
+.tblrow{
+  border: 1px solid black;
+}
+.table{
+  border: 1px solid black;
+}
+
+.table-1{
+  margin-top: -1%;
+ 
+}
+.btn1{
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+
+}
+
+.Common_input{
+width: 190px;
+}
+
+.Common_color{
+  padding: 8px;
+  text-align:center;
+  border: 1px solid black;  
+  font-size: smaller;
+  background-color:rgb(248, 248, 236);
+}
+
+.page-header{
+  float: left;
+  height: 39px;
+  background-color: coral;
+  border-radius: 10px 10px 0px 0px;
+  padding-left: 10px;
+  padding-top: 6px;
+  padding-right: 5px;
+}
+.header-line{
+  background-color: coral;
+}
+
+.span-header{
+  float: left;
+  height: 5px;
+  width:81.8pc;
+  background-color: coral;
+
+}
+input::placeholder{
+  text-align: center;
+}
+
+
+
+

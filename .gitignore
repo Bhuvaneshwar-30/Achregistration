@@ -37,6 +37,18 @@ yarn-error.log
 testem.log
 /typings
 
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build folders
+bin/
+obj/
+
+
 # System files
 .DS_Store
 Thumbs.db
+
+

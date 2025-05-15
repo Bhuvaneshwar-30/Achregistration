@@ -1,0 +1,132 @@
+<div class="container" style="margin-top: 50px;padding: 5px;">
+  <form #formRef="ngForm" (ngSubmit)="Onsubmit(formRef)" autocomplete="off">
+    <table class="tbl">
+      <tr>
+        <td colspan="2">
+          <div style="height: 35px;">
+            <div class="page-header" style="width: 207px;">
+              <span class="page-headertext">ACH Mandate Registration</span>
+            </div>
+            <div>
+              <span class="span-header"></span>
+              </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <table class="table" cellPadding="0" cellspacing="0" style="width: 100%;">
+        <colgroup>
+          <col width="20%"/>
+          <col width="20%"/>
+          <col width="20%"/>
+          <col width="20%"/>
+          <col width="20%"/>
+          <col width="20%"/>
+        </colgroup>
+        
+        <tr>
+          <td class="table-head" colspan="6">
+            <span style="background-color: antiquewhite;">Investor Details</span>
+          </td>
+        </tr>
+        <tr class="tblrow">
+          <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">customerId</strong></td>
+          <td class="tblcol"><input type="int" name="customerID" class="Common_input" id="customerID" placeholder="--customer id--" [(ngModel)]="customerId" readonly></td>
+          <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Investor Name</strong></td>
+          <td class="tblcol"><input type="text" class="Common_input" name="investorname" id="Investorid" placeholder="--Investor Name--"[(ngModel)]="customertabledata.investorname" required></td>
+          <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Mode Of Holding</strong></td>
+          <td class="tblcol"><input type = "text" class = "Common_input" name = "modeofholding" id="mohId" placeholder="--Holder Name--"[(ngModel)]="customertabledata.mode_of_holder" required></td>
+        </tr>
+
+
+        <tr>
+          <td class="table-head" colspan="6">
+            <span style="background-color: antiquewhite;">Bank Details</span>
+          </td>
+        </tr>
+        <tr class="tblrow">
+          <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Execute Through POA</strong></td>
+          <td class="tblcol"> <input type="checkbox" id="execute_through_poa" name="execute_through_poa"  [checked]="customertabledata.execute_through_poa === 'yes'" (change)="onCheckboxChange($event,'execute_through_poa')"/></td>
+        </tr>
+        <tr class="tblrow">
+          <td class="Common_color"><strong style="color: red; background-color:rgb(248, 248, 236);">Bank Name</strong></td>
+          <td class="tblcol">
+            <select class="Common_input" name="bankname" id="bankid" [(ngModel)]="customertabledata.bankname" placeholder="--Choose Bank Name--" required>
+              <option [ngValue]="null" >--Choose Bank Name--</option>
+              <option [ngValue]="'HDFC'">HDFC Bank</option>
+              <option [ngValue]="'SBI'">SBI Bank</option>
+              <option [ngValue]="'ICIC'">ICIC Bank</option>
+              <option [ngValue]="'IOB'">IOB Bank</option>
+            </select>
+          </td>
+          <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Account Number</strong></td>
+          <td class="tblcol">
+            <select class="Common_input" name="accountnumber" id="accountnumber" [(ngModel)]="customertabledata.accountnumber" required>
+              <option [ngValue]="null" >--Choose Account Number--</option>
+              <option *ngFor="let account of accountNumbers" [ngValue]="account">{{ account }}</option>
+            </select>
+          </td>
+          <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Branch Name</strong></td>
+          <td class="tblcol"><input type="text" class="Common_input" name="branchname" id="brand" [(ngModel)]="customertabledata.branchname" placeholder ="--custom--" required></td>
+        </tr>
+        <tr class="tblrow">
+          <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Account Type</strong></td>
+          <td class="tblcol">
+            <select class="Common_input" input type="text" name="accounttype" id="accounttypeid" [(ngModel)]="customertabledata.accounttype" required>
+              <option [ngValue]="null" >--Choose Account Type--</option>
+              <option [ngValue]="'savings'" >Savings</option>
+              <option [ngValue]="'current'" >Current</option>
+              <option [ngValue]="'salary'" >Salary</option>
+            </select>
+          </td>
+          <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Re-enterAccount Number</strong></td>
+          <td class="tblcol"><input type="number" class="Common_input" name="re_enteraccountnumber" id="Re-enterAccountid" [(ngModel)]="customertabledata.re_enteraccountnumber"  placeholder ="--Re-enterAccount Number--" required></td>
+          <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">MICR Number</strong></td>
+          <td class="tblcol"><input type="int" class="Common_input" name="micrnumber" id="micr" [(ngModel)]="customertabledata.micrnumber"placeholder ="--MICR NUmber--" required></td>
+        </tr>
+        <tr class="tblrow">
+          <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">IFSC CODE</strong></td>
+          <td class="tblcol"><input type="text" class="Common_input" name="ifsccode" id="ifsc"[(ngModel)]="customertabledata.ifsccode" placeholder="--IFSC CODE--" required/></td>
+          <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Bank Holder Name</strong></td>
+          <td class="tblcol"><input type="text" class="Common_input" name="bankholdername" id="bankholder" [(ngModel)]="customertabledata.bankholdername" placeholder="--Holder Name--" required/></td>
+          <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Bank Holder Name 1</strong></td>
+          <td class="tblcol"><input type="text" class="Common_input" name="bankholdername1" id="holder1"[(ngModel)]="customertabledata.bankholdername1" placeholder="--Holder Name 1--" required/></td>
+        </tr>
+        <tr class="tblrow">
+          <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Bank Holder Name 2</strong></td>
+          <td class="tblcol"><input type="text" class="Common_input" name="bankholdername2" id="holder2" [(ngModel)]="customertabledata.bankholdername2" placeholder="--Holder Name 2--" required/></td>
+        </tr>
+
+        <tr>
+          <td class="table-head" colspan="6">
+            <span style="background-color: antiquewhite;">ACH Mandate Details</span>
+          </td>
+        </tr>
+        <tr class="tblrow">
+          <td class="Common_color"><strong style="color: red; background-color:rgb(248, 248, 236);">ACH Amount</strong></td>
+          <td class="tblcol"><input type="int" class="Common_input" name="achamount" id="amount" [(ngModel)]="customertabledata.achamount" placeholder="--Enter Amount--" required/></td>
+          <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">ACH From Date</strong></td>
+          <td class="tblcol"><input type="text" class="Common_input" name="achfromdate" id="fromdate" [(ngModel)]="customertabledata.achfromdate" ngbDatepicker #d="ngbDatepicker" required/></td>
+          <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">ACH To Date</strong></td>
+          <td class="tblcol"><input type="date" class="Common_input" name="achtodate" id="todate" [(ngModel)]="customertabledata.achtodate" [readonly]="this.customertabledata.maximumperiod" required/></td>
+        </tr>
+        <tr class="tblrow">
+          <td class="Common_color">Maximum Period</td>
+          <td class="tblcol"><input type="checkbox" name="maximumperiod" id="maximumperiodid" [(ngModel)]="customertabledata.maximumperiod" (change)="onMaxPeriodChange()"/></td> 
+        </tr>
+      </table>
+
+
+      <table class="table-1" cellPadding="0" cellspacing="0" style="width: 100%;">
+        <tr class="tblrow" >
+          <td class="tblcol" style=" padding: 8px;">
+            <button type="submit" class="btn1" name="Submit" id="Submit" style="background-color: black;color: whitesmoke;">Save</button>
+            <button type="button" class="btn1" name="print" id="print" style="background-color: darkgray;color:white;">Print</button>
+            <button type="button" class="btn1" name="Reset" (click)="reset()" id="Reset" style="background-color: black;color: whitesmoke;">Reset</button>
+          </td>
+        </tr>
+
+    </table>
+  </form>
+</div>
