@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace WebApplication1.models
 {
-  public class ACHrequestDto
+  public class ACHEditDto
   {
     #region Properties
 
@@ -11,7 +11,7 @@ namespace WebApplication1.models
     [JsonPropertyName("Asflag")]
     public required string Asflag { get; set; }
 
-    [JsonPropertyName("customerID")]
+    [JsonPropertyName("customerId")]
     public int customerID { get; set; }
 
     [JsonPropertyName("investorname")]
@@ -27,7 +27,7 @@ namespace WebApplication1.models
     public decimal? accountnumber { get; set; }
 
     [JsonPropertyName("branchname")]
-    public required string branchname {  get; set; }
+    public required string branchname { get; set; }
 
     [JsonPropertyName("accounttype")]
     public required string accounttype { get; set; }
@@ -122,3 +122,5 @@ namespace WebApplication1.models
     #endregion
   }
 }
+
+

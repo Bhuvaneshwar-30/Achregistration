@@ -25,7 +25,7 @@ namespace WebApplication1.models
       public required string bankname { get; set; }
 
       [JsonPropertyName("accountnumber")]
-      public long accountnumber { get; set; }
+      public decimal? accountnumber { get; set; }
 
       [JsonPropertyName("branchname")]
       public required string branchname { get; set; }
@@ -34,10 +34,10 @@ namespace WebApplication1.models
       public required string accounttype { get; set; }
 
       [JsonPropertyName("re_enteraccountnumber")]
-      public long re_enteraccountnumber { get; set; }
+      public decimal? re_enteraccountnumber { get; set; }
 
       [JsonPropertyName("micrnumber")]
-      public long micrnumber { get; set; }
+      public decimal? micrnumber { get; set; }
 
       [JsonPropertyName("ifsccode")]
       public required string ifsccode { get; set; }
@@ -52,16 +52,14 @@ namespace WebApplication1.models
       public required string bankholdername2 { get; set; }
 
       [JsonPropertyName("achamount")]
-      public long achamount { get; set; }
+      public decimal? achamount { get; set; }
+
 
       [JsonPropertyName("achfromdate")]
-      public DateTime achfromdate { get; set; }
+      public DateTime? achfromdate { get; set; }
 
       [JsonPropertyName("achtodate")]
-      public DateTime achtodate { get; set; }
-
-      [JsonPropertyName("maximumperiod")]
-      public required string maximumperiod { get; set; }
+      public DateTime? achtodate { get; set; }
 
       [JsonPropertyName("mode_of_holder")]
       public required string mode_of_holder { get; set; }

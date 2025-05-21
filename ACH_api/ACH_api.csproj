@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="JsonDateOnlyConverter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="models\Edit.Dto" />
+    <None Remove="Properties\Edit.Dto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />

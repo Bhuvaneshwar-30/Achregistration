@@ -1,0 +1,6 @@
+﻿namespace ACH_api.models
+{
+    public class Edit
+    {
+    }
+}

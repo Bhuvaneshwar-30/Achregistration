@@ -11,18 +11,26 @@ namespace WebApplication1.Controllers
   
   public class loginController : Controller 
   {
+    private readonly string _connectionString;
+
+    public loginController(IConfiguration configuration)
+    {
+      _connectionString = configuration.GetConnectionString("ACHConnection")!;
+    }
+
+    private SqlConnection GetConnection()
+    {
+      return new SqlConnection(_connectionString);
+    }
+
+
     [HttpPost("insert")]
     public IActionResult ACHloginSavedData([FromBody] ACHrequestDto aCHrequestDto)
     {
-      SqlConnection connection = new SqlConnection
+      using var connection = GetConnection();
+      using var command = new SqlCommand("sp_ACHloginSavedData", connection)
       {
-        ConnectionString = "Data Source=.\\sqlexpress;Initial Catalog=ACH;Integrated Security=True;Trust Server Certificate=True"
-      };
-      SqlCommand command = new SqlCommand()
-      {
-        CommandText = "sp_ACHloginSavedData",
-        CommandType = CommandType.StoredProcedure,
-        Connection = connection
+        CommandType = CommandType.StoredProcedure
       };
 
 
@@ -51,7 +59,6 @@ namespace WebApplication1.Controllers
         command.Parameters.AddWithValue("@achamount", aCHrequestDto.achamount);
         command.Parameters.AddWithValue("@achfromdate", aCHrequestDto.achfromdate);
         command.Parameters.AddWithValue("@achtodate", aCHrequestDto.achtodate);
-        command.Parameters.AddWithValue("@maximumperiod", aCHrequestDto.maximumperiod);
         command.Parameters.AddWithValue("@mode_of_holder", aCHrequestDto.mode_of_holder);
         command.Parameters.AddWithValue("@dummy3", aCHrequestDto.dummy3);
         command.Parameters.AddWithValue("@dummy4", aCHrequestDto.dummy4);
@@ -82,24 +89,19 @@ namespace WebApplication1.Controllers
     [HttpPost("get")]
     public IActionResult ACHloginGetData([FromBody] ACHresponseDto.Getdata getdata)
     {
-      SqlConnection connection = new SqlConnection
+      using var connection = GetConnection();
+      using var command = new SqlCommand("sp_ACHloginSavedData", connection)
       {
-        ConnectionString = "Data Source=.\\sqlexpress;Initial Catalog=ACH;Integrated Security=True;Trust Server Certificate=True"
-      };
-      SqlCommand command = new SqlCommand()
-      {
-        CommandText = "sp_ACHloginSavedData",
-        CommandType = CommandType.StoredProcedure,
-        Connection = connection
+        CommandType = CommandType.StoredProcedure
       };
 
-      if(getdata.flag == "Locate")
+      if (getdata.flag == "Locate")
       {
         command.Parameters.AddWithValue("@Asflag", "Locate");
       }
       else if(getdata.flag == "save")
       {
-        command.Parameters.AddWithValue("Asflag", "save");
+        command.Parameters.AddWithValue("@Asflag", "save");
       }
 
         
@@ -135,35 +137,61 @@ namespace WebApplication1.Controllers
           bankholdername1 = row["bankholdername1"]?.ToString(),
           bankholdername2 = row["bankholdername2"]?.ToString(),
           achamount = row["achamount"]?.ToString(),
-          achfromdate = row["achfromdate"]?.ToString(),
-          achtodate = row["achtodate"]?.ToString(),
-          maximumperiod = row["maximumperiod"]?.ToString(),
+          achfromdate = row["achfromdate"] != DBNull.Value
+        ? Convert.ToDateTime(row["achfromdate"]).ToString("yyyy-MM-dd")
+        : null,
+          achtodate = row["achtodate"] != DBNull.Value
+        ? Convert.ToDateTime(row["achtodate"]).ToString("yyyy-MM-dd")
+        : null,
           mode_of_holder = row["mode_of_holder"]?.ToString()
-          //dummy3 = row["dummy3"]?.ToString(),
-          //dummy4 = row["dummy4"]?.ToString(),
-          //dummy5 = row["dummy5"]?.ToString(),
-          //dummy6 = row["dummy6"]?.ToString(),
-          //dummy7 = row["dummy7"]?.ToString(),
-          //dummy8 = row["dummy8"]?.ToString(),
-          //dummy9 = row["dummy9"]?.ToString(),
-          //dummy10 = row["dummy10"]?.ToString(),
-          //dummy11 = row["dummy11"]?.ToString(),
-          //dummy12 = row["dummy12"]?.ToString(),
-          //dummy13 = row["dummy13"]?.ToString(),
-          //dummy14 = row["dummy14"]?.ToString(),
-          //dummy15 = row["dummy15"]?.ToString(),
-          //dummy16 = row["dummy16"]?.ToString(),
-          //dummy17 = row["dummy17"]?.ToString(),
-          //dummy18 = row["dummy18"]?.ToString(),
-          //dummy19 = row["dummy19"]?.ToString(),
-          //dummy20 = row["dummy20"]?.ToString()
         };
+
 
         resultList.Add(record);
       }
 
       return Ok(resultList);
     }
+
+    [HttpPost ("Edit")]
+    public IActionResult ACHloginEditData([FromBody] ACHEditDto aCHEditDto)
+    {
+      using var connection = GetConnection();
+      using var command = new SqlCommand("sp_ACHloginSavedData", connection)
+      {
+        CommandType = CommandType.StoredProcedure
+      };
+      command.Parameters.AddWithValue("@Asflag", "Edit");
+      command.Parameters.AddWithValue("@customerID", aCHEditDto.customerID);
+
+
+      command.Parameters.AddWithValue("@investorname", aCHEditDto.investorname);
+      command.Parameters.AddWithValue("@execute_through_poa", aCHEditDto.execute_through_poa);
+      command.Parameters.AddWithValue("@bankname", aCHEditDto.bankname);
+      command.Parameters.AddWithValue("@accountnumber", aCHEditDto.accountnumber);
+      command.Parameters.AddWithValue("@branchname", aCHEditDto.branchname);
+      command.Parameters.AddWithValue("@accounttype", aCHEditDto.accounttype);
+      command.Parameters.AddWithValue("@re_enteraccountnumber", aCHEditDto.re_enteraccountnumber);
+      command.Parameters.AddWithValue("@micrnumber", aCHEditDto.micrnumber);
+      command.Parameters.AddWithValue("@ifsccode", aCHEditDto.ifsccode);
+      command.Parameters.AddWithValue("@bankholdername", aCHEditDto.bankholdername);
+      command.Parameters.AddWithValue("@bankholdername1", aCHEditDto.bankholdername1);
+      command.Parameters.AddWithValue("@bankholdername2", aCHEditDto.bankholdername2);
+      command.Parameters.AddWithValue("@achamount", aCHEditDto.achamount);
+      command.Parameters.AddWithValue("@achfromdate", aCHEditDto.achfromdate);
+      command.Parameters.AddWithValue("@achtodate", aCHEditDto.achtodate);
+      command.Parameters.AddWithValue("@mode_of_holder", aCHEditDto.mode_of_holder);
+
+      connection.Open();
+      command.ExecuteNonQuery();
+      return Ok(new { status = "success", message = "Data updated successfully", customerID = aCHEditDto.customerID });
+
+
+    }
+
+
+      
+
   }
 }
 

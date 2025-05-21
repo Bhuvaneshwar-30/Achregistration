@@ -14,9 +14,9 @@
     bankholdername1: string;
     bankholdername2: string;
     achamount: number | null;
-    achfromdate: string;
-    achtodate: string;
-    maximumperiod: boolean;
+    achfromdate: string | null;
+    achtodate: string | null;
+    maximumperiod:boolean;
     mode_of_holder: string; Asflag: string; dummy3: string; dummy4: string; dummy5: string;
     dummy6: string; dummy7: string; dummy8: string; dummy9: string; dummy10: string;
     dummy11: string; dummy12: string; dummy13: string; dummy14: string; dummy15: string;

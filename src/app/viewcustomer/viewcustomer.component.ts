@@ -3,6 +3,7 @@
     import { FormsModule, NgForm } from '@angular/forms';
     import { SharedService } from '../shared.service';
     import { CustomerTableData } from '../interface';
+import { formatDate } from '@angular/common';
     
     @Component({
       selector: 'app-viewcustomer',
@@ -13,7 +14,7 @@
     export class ViewcustomerComponent {
       customerId: number  | null = null;
       
-      customertabledata:CustomerTableData={
+    customertabledata:CustomerTableData={
     investorname : '',
     execute_through_poa:'no',
     bankname: '',
@@ -27,8 +28,8 @@
     bankholdername1: '',
     bankholdername2: '',
     achamount:null,
-    achfromdate: '',
-    achtodate: '',
+    achfromdate: null,
+    achtodate: null,
     maximumperiod:false,
     mode_of_holder: '', Asflag: '', dummy3: '', dummy4: '', dummy5: '',
     dummy6: '', dummy7: '', dummy8: '', dummy9: '', dummy10: '',

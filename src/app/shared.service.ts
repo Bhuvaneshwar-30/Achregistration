@@ -15,6 +15,7 @@
     private customerdata:any =null;
     private flag: string = 'Locate';
     private customerTableData: CustomerTableData | null = null;
+
     
     constructor(private http: HttpClient){}
 
