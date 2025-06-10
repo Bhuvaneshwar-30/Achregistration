@@ -1,5 +1,5 @@
 <div class="container">
-  <form #formRef="ngForm" (ngSubmit)="Onsubmit(formRef)" autocomplete="off">
+  <form #formRef="ngForm" (ngSubmit)="Onsubmit(formRef)" novalidate autocomplete="off">
     <table class="tbl">
       <tr>
         <td colspan="2">
@@ -31,12 +31,12 @@
           </td>
         </tr>
         <tr class="tblrow">
-          <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">customerId</strong></td>
-          <td class="tblcol"><input type="int" name="customerID" class="Common_input" id="customerID" placeholder="--customer id--" [(ngModel)]="customerID" readonly></td>
+          <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">CustomerID</strong></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="number" name="customerID" class="Common_input" id="customerID" placeholder="--customer id--" [(ngModel)]="customerID"  readonly></td>
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Investor Name</strong></td>
-          <td class="tblcol"><input type="text" class="Common_input" name="investorname" id="Investorid" placeholder="--Investor Name--"[(ngModel)]="customertabledata.investorname" required></td>
+          <td class="tblcol"  *ngIf="customertabledata"><input type="text" class="Common_input" name="investorname" id="Investorid" placeholder="--Investor Name--"[(ngModel)]="customertabledata.investorname"  [disabled]="isLocateMode"  required></td>
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Mode Of Holding</strong></td>
-          <td class="tblcol"><input type = "text" class = "Common_input" name = "modeofholding" id="mohId" placeholder="--Holder Name--"[(ngModel)]="customertabledata.mode_of_holder" required></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type = "text" class = "Common_input" name = "modeofholding" id="mohId" placeholder="--Holder Name--"[(ngModel)]="customertabledata.mode_of_holder" [disabled]="isLocateMode" required></td>
         </tr>
 
 
@@ -47,33 +47,45 @@
         </tr>
         <tr class="tblrow">
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Execute Through POA</strong></td>
-          <td class="tblcol"> <input type="checkbox" id="execute_through_poa" name="execute_through_poa"  [checked]="customertabledata.execute_through_poa === 'yes'" (change)="onCheckboxChange($event,'execute_through_poa')"/></td>
+          <td class="tblcol" *ngIf="customertabledata" > <input type="checkbox" id="execute_through_poa" name="execute_through_poa"  [checked]="customertabledata.execute_through_poa === 'yes'" (change)="onCheckboxChange($event,'execute_through_poa')"[disabled]="isLocateMode" required/></td>
         </tr>
         <tr class="tblrow">
           <td class="Common_color"><strong style="color: red; background-color:rgb(248, 248, 236);">Bank Name</strong></td>
+            <td class="tblcol"*ngIf="customertabledata">
+              <select class="Common_input" name="bankname" id="bankid" [(ngModel)]="customertabledata.bankcode" (change)="onBankSelectionChange()" placeholder="--Choose Bank Name--"required>
+                <option [ngValue]="null">--Choose Bank Name--</option>
+                <option *ngFor="let bank of dropdownBankList" [value]="bank.bankcode">{{ bank.bankname }}</option>
+              </select>
+            </td>
+          
+          <td class="Common_color"> <strong style="color: red; background-color: rgb(248, 248, 236);">Account Number</strong></td>
           <td class="tblcol">
-            <select class="Common_input" name="bankname" id="bankid" [(ngModel)]="customertabledata.bankname" placeholder="--Choose Bank Name--">
-              <option [ngValue]="null" >--Choose Bank Name--</option>
-              <option [ngValue]="'HDFC'">HDFC Bank</option>
-              <option [ngValue]="'SBI'">SBI Bank</option>
-              <option [ngValue]="'ICIC'">ICIC Bank</option>
-              <option [ngValue]="'IOB'">IOB Bank</option>
+            <!-- Show dropdown in Locate or Edit mode -->
+            <select *ngIf="customertabledata && (customertabledata.Asflag === 'Locate' || customertabledata.Asflag === 'Edit')"
+                    class="Common_input"
+                    name="accountnumber"
+                    id="accountnumber"
+                    [(ngModel)]="customertabledata.accountnumber"
+                    (change)="onAccountNumberSelectionChange()"
+                    required>
+              <option [ngValue]="null">--Choose Account Number--</option>
+              <option *ngFor="let acc of filteredAccountNumbers" [ngValue]="acc.accountnumber">{{ acc.accountnumber }}</option>
             </select>
+
+            <!-- Show input in New mode -->
+            <!-- <div> -->
+              <!-- <label for="accountnumberInput" class="tblrow"></label> -->
+              <input type="text" class="Common_input" id="accountnumberInput" name="accountnumber" [(ngModel)]="customertabledata.accountnumber" *ngIf="customertabledata && customertabledata.Asflag === 'save'" placeholder="---Account Number---" required />
+            <!-- </div> -->
           </td>
-          <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Account Number</strong></td>
-          <td class="tblcol">
-            <select class="Common_input" name="accountnumber" id="accountnumber" [(ngModel)]="customertabledata.accountnumber">
-              <option [ngValue]="null" >--Choose Account Number--</option>
-              <option *ngFor="let account of accountNumbers" [ngValue]="account">{{ account }}</option>
-            </select>
-          </td>
+
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Branch Name</strong></td>
-          <td class="tblcol"><input type="text" class="Common_input" name="branchname" id="brand" [(ngModel)]="customertabledata.branchname" placeholder ="--custom--"></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="branchname" id="brand" [(ngModel)]="customertabledata.branchname" [disabled]="isLocateMode"  placeholder ="--custom--" required/></td>
         </tr>
         <tr class="tblrow">
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Account Type</strong></td>
-          <td class="tblcol">
-            <select class="Common_input" input type="text" name="accounttype" id="accounttypeid" [(ngModel)]="customertabledata.accounttype">
+          <td class="tblcol" *ngIf="customertabledata">
+            <select class="Common_input" input type="text" name="accounttype" id="accounttypeid" [(ngModel)]="customertabledata.accounttype" [disabled]="isLocateMode" required>
               <option [ngValue]="null" >--Choose Account Type--</option>
               <option [ngValue]="'savings'" >Savings</option>
               <option [ngValue]="'current'" >Current</option>
@@ -81,21 +93,21 @@
             </select>
           </td>
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Re-enterAccount Number</strong></td>
-          <td class="tblcol"><input type="number" class="Common_input" name="re_enteraccountnumber" id="Re-enterAccountid" [(ngModel)]="customertabledata.re_enteraccountnumber"  placeholder ="--Re-enterAccount Number--"></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="number" class="Common_input" name="re_enteraccountnumber" id="Re-enterAccountid" [(ngModel)]="customertabledata.re_enteraccountnumber" [disabled]="isLocateMode"  placeholder ="--Re-enterAccount Number--" required/></td>
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">MICR Number</strong></td>
-          <td class="tblcol"><input type="int" class="Common_input" name="micrnumber" id="micr" [(ngModel)]="customertabledata.micrnumber"placeholder ="--MICR NUmber--"></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="number" class="Common_input" name="micrnumber" id="micr" [(ngModel)]="customertabledata.micrnumber"placeholder ="--MICR NUmber--" [disabled]="isLocateMode" required></td>
         </tr>
         <tr class="tblrow">
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">IFSC CODE</strong></td>
-          <td class="tblcol"><input type="text" class="Common_input" name="ifsccode" id="ifsc"[(ngModel)]="customertabledata.ifsccode" placeholder="--IFSC CODE--"/></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="ifsccode" id="ifsc"[(ngModel)]="customertabledata.ifsccode" [disabled]="isLocateMode" placeholder="--IFSC CODE--" required/></td>
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Bank Holder Name</strong></td>
-          <td class="tblcol"><input type="text" class="Common_input" name="bankholdername" id="bankholder" [(ngModel)]="customertabledata.bankholdername" placeholder="--Holder Name--"/></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="bankholdername" id="bankholder" [(ngModel)]="customertabledata.bankholdername" [disabled]="isLocateMode" placeholder="--Holder Name--"required/></td>
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Bank Holder Name 1</strong></td>
-          <td class="tblcol"><input type="text" class="Common_input" name="bankholdername1" id="holder1"[(ngModel)]="customertabledata.bankholdername1" placeholder="--Holder Name 1--"/></td>
+          <td class="tblcol" *ngIf="customertabledata"><input type="text" class="Common_input" name="bankholdername1" id="holder1"[(ngModel)]="customertabledata.bankholdername1" [disabled]="isLocateMode" placeholder="--Holder Name 1--"/></td>
         </tr>
         <tr class="tblrow">
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Bank Holder Name 2</strong></td>
-          <td class="tblcol"><input type="text" class="Common_input" name="bankholdername2" id="holder2" [(ngModel)]="customertabledata.bankholdername2" placeholder="--Holder Name 2--" /></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="bankholdername2" id="holder2" [(ngModel)]="customertabledata.bankholdername2" [disabled]="isLocateMode" placeholder="--Holder Name 2--" /></td>
         </tr>
 
         <tr>
@@ -105,32 +117,28 @@
         </tr>
         <tr class="tblrow">
           <td class="Common_color"><strong style="color: red; background-color:rgb(248, 248, 236);">ACH Amount</strong></td>
-          <td class="tblcol"><input type="int" class="Common_input" name="achamount" id="amount" [(ngModel)]="customertabledata.achamount" placeholder="--Enter Amount--" /></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="int" class="Common_input" name="achamount" id="amount" [(ngModel)]="customertabledata.achamount" [disabled]="isLocateMode" placeholder="--Enter Amount--" required/></td>
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">ACH From Date</strong></td>
-          <!-- <div class="datepicker-wrapper"> -->
-            <td class="tblcol"><input type="date" class="Common_input" name="achfromdate" id="fromdate" [(ngModel)]="customertabledata.achfromdate"/>
-              <!-- <button type="button" (click)="d.toggle()" class="btn btn-outline-secondary">📅</button> -->
+            <td class="tblcol" *ngIf="customertabledata" ><input type="date" class="Common_input" name="achfromdate" id="fromdate" [(ngModel)]="customertabledata.achfromdate" [disabled]="isLocateMode" required/>
             </td>
-          <!-- </div> -->
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">ACH To Date</strong></td>
-          <td class="tblcol"><input type="date" class="Common_input" name="achtodate" id="todate" [(ngModel)]="customertabledata.achtodate"/>
-            <!-- <button type="button" (click)="d.toggle()" class="btn btn-outline-secondary">📅</button> -->
+          <td class="tblcol" *ngIf="customertabledata" ><input type="date" class="Common_input" name="achtodate" id="todate" [(ngModel)]="customertabledata.achtodate" [disabled]="isLocateMode" required/>
           </td>
         </tr>
           <tr class="tblrow">
             <td class="Common_color">Maximum Period</td>
-            <td class="tblcol"><input type="checkbox" name="maximumperiod" id="maximumperiodid" [(ngModel)]="customertabledata.maximumperiod" (change)=" onMaximumPeriodChange($event)"/></td> 
-            <!-- --/(change)="onMaximumPeriodChange($event)  -->
+            <td class="tblcol" *ngIf="customertabledata" ><input type="checkbox" name="maximumperiod" id="maximumperiodid" [(ngModel)]="customertabledata.maximumperiod" [disabled]="isLocateMode" (change)=" onMaximumPeriodChange($event)"/></td>
           </tr>
       </table>
 
 
       <table class="table-1" cellPadding="0" cellspacing="0" style="width: 100%;">
         <tr class="tblrow" >
-          <td class="tblcol" style=" padding: 8px;">
-            <button type="submit" class="btn1" name="Submit" id="Submit" style="background-color: black;color: whitesmoke;">Save</button>
+          <td class="tblcol" *ngIf="customertabledata"  style=" padding: 8px;">
+            <button type="submit" class="btn1" name="Submit" id="Submit" style="background-color: black;color: whitesmoke;" [disabled]="customertabledata.Asflag === 'Locate'">Save</button>
             <button type="button" class="btn1" name="print" id="print" style="background-color: darkgray;color:white;">Print</button>
-            <button type="button" class="btn1" name="Reset" (click)="reset()" id="Reset" style="background-color: black;color: whitesmoke;">Reset</button>
+            <button type="button" class="btn1" name="Reset" (click)="resetFormToNew() "id="reset" style="background-color: black;color: whitesmoke;" [disabled]="customertabledata.Asflag === 'Locate'">Reset</button>
+            <button type="button" class="btn1" name="Back" (click)="goback()" id="Reset" style="background-color: darkgray;color:white;">Back</button>
           </td>
         </tr>
 

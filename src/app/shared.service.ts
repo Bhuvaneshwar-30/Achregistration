@@ -1,10 +1,15 @@
   import { HttpClient } from '@angular/common/http';
   import { Injectable } from '@angular/core';
-  import { Observable } from 'rxjs';
-  import { CustomerTableData } from './interface'; // adjust path if needed
+  import { Observable, of, throwError } from 'rxjs';
+  import { Bank_name, BankDetails, CustomerTableData } from './interface';
+   
 
 
-
+  // export interface Bank {
+  // bankcode: string;
+  // bankname: string;
+  // accountnumber: number | null;
+  // } 
 
   @Injectable({
     providedIn: 'root'
@@ -13,17 +18,19 @@
     
     private customerId: number | null=null;
     private customerdata:any =null;
-    private flag: string = 'Locate';
+    private flag: string = '';
     private customerTableData: CustomerTableData | null = null;
+    private bankdetails:any = null;
+
 
     
     constructor(private http: HttpClient){}
 
 
-    setcustomerId(id :number):void {
+    setCustomerId(id :number):void {
       this.customerId = id;
     }
-    getcustomerId():number {
+    getCustomerId():number {
       return this.customerId!=null ? this.customerId:0 ;
     }
 
@@ -33,6 +40,7 @@
 
     getcustomerdata():any{
       return this.customerdata;
+   
     }
 
     setFlag(flag: string): void {
@@ -45,16 +53,60 @@
 
 
 
-    checkCustomer(custid: number, flag: string):Observable<any>{
-      return this.http.post('https://localhost:7069/api/get',{custid,flag});
+
+
+
+    checkCustomer(customerId: number, flag: string, data?:CustomerTableData,httpOptions?: any):Observable<any>{
+      console.log(`checkCustomer called with:`, { customerId, flag, data });
+      if (flag === 'Locate') {
+      return this.http.post('https://localhost:7069/api/get',{custid: customerId,flag});
+      }
+      if(flag === 'save' && data){
+        return this.http.post('https://localhost:7069/api/insert',data,httpOptions)
+      }
+
+      if (flag === 'Edit' && data) {
+          const payload = {
+          ...data,
+          Asflag: 'Edit',         // must be exact casing
+          customerId: customerId      // include customerId too, if required
+        };
+        return this.http.post('https://localhost:7069/api/Edit',payload,httpOptions);
+       }
+        return throwError(() => new Error('Invalid parameters for checkCustomer'));
     }
 
-    setCustomerTableData(data: CustomerTableData) {
-  this.customerTableData = data;
-}
+ 
 
-getCustomerTableData(): CustomerTableData | null {
-  return this.customerTableData;
-}
+    setCustomerTableData(data: CustomerTableData) {
+      this.customerTableData = data;
+    }
+
+    getCustomerTableData(): CustomerTableData | null {
+      return this.customerTableData;
+    }
+
+
+  getBankDetailsByCustomerId(customerId: number): Observable<BankDetails[]> {
+    return this.http.get<BankDetails[]>(`https://localhost:7069/api/bankdetails/${customerId}`); 
+  }
+
+  get isLocateMode(): boolean {
+   return this.customerTableData?.Asflag === 'Locate';
+  }
+
+  getDistinctBankNames(): Observable<Bank_name[]> {
+    return this.http.get<Bank_name[]>('https://localhost:7069/api/GetBankList');
+  }
+
+
+  setbankdetailsdata(data: BankDetails) {
+      this.bankdetails = data;
+  }
+  getbankdetailsdata(): BankDetails | null {
+      return this.bankdetails;
+  }
+
+    
   }
 
