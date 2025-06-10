@@ -108,10 +108,10 @@
               if (selectedFlagNormalized === 'Edit' || selectedFlagNormalized === 'Locate') {
                 const customer = customerArray[0];
 
-                if (!customer) {
-                  console.error('No customer found in customerArray');
-                  return;
-                }
+                // if (!customer) {
+                //   console.error('No customer found in customerArray');
+                //   return;
+                // }
 
                 const achData = customer.achlogin?.[0] ?? null;
                 const bankData = customer.bankDetails?.length > 0 ? customer.bankDetails[0] : null;
@@ -157,7 +157,7 @@
             },
             error: (err: HttpErrorResponse) => {
               console.error('Error fetching customer:', err.message);
-              alert('An error occurred while fetching the customer.');
+              alert('Customer Not Found');
             }
           });
       } else {

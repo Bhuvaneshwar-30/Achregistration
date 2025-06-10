@@ -164,20 +164,24 @@
                 bankcode = reader["bankcode"]?.ToString() ?? "",
                 master_bankname = reader["master_bankname"]?.ToString() ?? ""
               });
+                }
+            if (!achloginList.Any() && !bankDetailsList.Any() && !bankMasterList.Any())
+            {
+              return NotFound(new { message = "Customer ID not found or no data available." });
             }
 
             return Ok(new
+                {
+                  achlogin = achloginList,
+                  bankDetails = bankDetailsList,
+                  bankMaster = bankMasterList
+                });
+            }
+            else
             {
-              achlogin = achloginList,
-              bankDetails = bankDetailsList,
-              bankMaster = bankMasterList
-            });
-          }
-          else
-          {
-            // Handle other flags (like "save") accordingly
+                // Handle other flags (like "save") accordingly
             return BadRequest("Invalid flag value.");
-          }
+            }
         }
 
 
