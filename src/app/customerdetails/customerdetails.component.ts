@@ -8,6 +8,9 @@ import { Bank_name, BankDetails, CustomerTableData} from '../interface';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
 
 
 
@@ -515,6 +518,66 @@ downloadPDF(): void {
     alert("An error occurred while generating the PDF. Please try again.");
   }
 }
+
+
+exportToExcel(): void {
+  const customerId = this.customerID || 'Unknown';
+
+  const data = [
+    { Field: 'Investor Name', Value: this.customertabledata.investorname },
+    { Field: 'POA Execution', Value: this.customertabledata.execute_through_poa },
+    { Field: 'Bank Name', Value: this.customertabledata.bankname },
+    { Field: 'Account Number', Value: this.customertabledata.accountnumber },
+    { Field: 'Branch Name', Value: this.customertabledata.branchname },
+    { Field: 'Account Type', Value: this.customertabledata.accounttype },
+    { Field: 'MICR Number', Value: this.customertabledata.micrnumber },
+    { Field: 'IFSC Code', Value: this.customertabledata.ifsccode },
+    { Field: 'Bank Holder Name', Value: this.customertabledata.bankholdername },
+    { Field: 'ACH Amount', Value: this.customertabledata.achamount },
+    { Field: 'ACH From Date', Value: this.customertabledata.achfromdate },
+    { Field: 'ACH To Date', Value: this.customertabledata.achtodate },
+    { Field: 'Maximum Period', Value: this.customertabledata.maximumperiod ? 'Yes' : 'No' },
+    { Field: 'Bank Code', Value: this.customertabledata.bankcode },
+  ];
+
+  
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+  const workbook: XLSX.WorkBook = {
+    Sheets: { 'Customer Data': worksheet },
+    SheetNames: ['Customer Data']
+  };
+
+  const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+  const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+  FileSaver.saveAs(blob, `Customer_${customerId}.xlsx`);
+}
+
+openExportOptions(): void {
+  const choice = prompt(
+    "Select export format:\nType 'pdf' for PDF\nType 'excel' for Excel\nType 'cancel' to abort:"
+  )?.trim().toLowerCase();
+
+  switch (choice) {
+    case 'pdf':
+      this.downloadPDF();
+      break;
+    case 'excel':
+      this.exportToExcel();
+      break;
+    case 'cancel':
+    case null:
+      alert('Export cancelled.');
+      break;
+    default:
+      alert("Invalid choice. Please type 'pdf', 'excel', or 'cancel'.");
+      break;
+  }
+}
+
+
+
 
 
 

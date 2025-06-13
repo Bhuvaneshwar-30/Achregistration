@@ -137,7 +137,7 @@
         <tr class="tblrow" >
           <td class="tblcol" *ngIf="customertabledata"  style=" padding: 8px;">
             <button type="submit" class="btn1" name="Submit" *ngIf="customertabledata.Asflag === 'save'|| customertabledata.Asflag === 'Edit'" id="Submit" style="background-color: black;color: whitesmoke;">Save</button>
-            <button type="button" class="btn1" name="print"  *ngIf="customertabledata.Asflag === 'Locate'" (click)="downloadPDF()" id="print" style="background-color: rgb(10, 10, 10);color:white;">Print</button>
+            <button type="button" class="btn1" name="print"  *ngIf="customertabledata.Asflag === 'Locate'" (click)="openExportOptions()" id="print" style="background-color: rgb(10, 10, 10);color:white;">Print</button>
             <button type="button" class="btn1" name="Reset" *ngIf="customertabledata.Asflag === 'save'|| customertabledata.Asflag === 'Edit'" id="Submit" (click)="resetFormToNew() "id="reset" style="background-color: darkgray;color: whitesmoke;">Reset</button>
             <button type="button" class="btn1" name="Back" (click)="goback()" id="Reset" style="background-color: rgb(15, 0, 0);color:white;">Back</button>
           </td>
