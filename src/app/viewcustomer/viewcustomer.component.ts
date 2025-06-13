@@ -108,10 +108,7 @@
               if (selectedFlagNormalized === 'Edit' || selectedFlagNormalized === 'Locate') {
                 const customer = customerArray[0];
 
-                // if (!customer) {
-                //   console.error('No customer found in customerArray');
-                //   return;
-                // }
+               
 
                 const achData = customer.achlogin?.[0] ?? null;
                 const bankData = customer.bankDetails?.length > 0 ? customer.bankDetails[0] : null;

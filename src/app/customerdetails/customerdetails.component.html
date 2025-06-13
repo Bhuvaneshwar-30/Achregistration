@@ -1,5 +1,6 @@
 <div class="container">
   <form #formRef="ngForm" (ngSubmit)="Onsubmit(formRef)" novalidate autocomplete="off">
+   <div id="print-section">
     <table class="tbl">
       <tr>
         <td colspan="2">
@@ -130,15 +131,15 @@
             <td class="tblcol" *ngIf="customertabledata" ><input type="checkbox" name="maximumperiod" id="maximumperiodid" [(ngModel)]="customertabledata.maximumperiod" [disabled]="isLocateMode" (change)=" onMaximumPeriodChange($event)"/></td>
           </tr>
       </table>
-
+   </div>
 
       <table class="table-1" cellPadding="0" cellspacing="0" style="width: 100%;">
         <tr class="tblrow" >
           <td class="tblcol" *ngIf="customertabledata"  style=" padding: 8px;">
-            <button type="submit" class="btn1" name="Submit" id="Submit" style="background-color: black;color: whitesmoke;" [disabled]="customertabledata.Asflag === 'Locate'">Save</button>
-            <button type="button" class="btn1" name="print" id="print" style="background-color: darkgray;color:white;">Print</button>
-            <button type="button" class="btn1" name="Reset" (click)="resetFormToNew() "id="reset" style="background-color: black;color: whitesmoke;" [disabled]="customertabledata.Asflag === 'Locate'">Reset</button>
-            <button type="button" class="btn1" name="Back" (click)="goback()" id="Reset" style="background-color: darkgray;color:white;">Back</button>
+            <button type="submit" class="btn1" name="Submit" *ngIf="customertabledata.Asflag === 'save'|| customertabledata.Asflag === 'Edit'" id="Submit" style="background-color: black;color: whitesmoke;">Save</button>
+            <button type="button" class="btn1" name="print"  *ngIf="customertabledata.Asflag === 'Locate'" (click)="downloadPDF()" id="print" style="background-color: rgb(10, 10, 10);color:white;">Print</button>
+            <button type="button" class="btn1" name="Reset" *ngIf="customertabledata.Asflag === 'save'|| customertabledata.Asflag === 'Edit'" id="Submit" (click)="resetFormToNew() "id="reset" style="background-color: darkgray;color: whitesmoke;">Reset</button>
+            <button type="button" class="btn1" name="Back" (click)="goback()" id="Reset" style="background-color: rgb(15, 0, 0);color:white;">Back</button>
           </td>
         </tr>
 

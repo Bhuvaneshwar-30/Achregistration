@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
 import { Bank_name, BankDetails, CustomerTableData} from '../interface';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+
 
 @Component({
   selector: 'app-customerdetails',
@@ -453,6 +457,65 @@ export class CustomerdetailsComponent implements OnInit {
     this.sharedService.setFlag('save'); // Set the service's flag to 'save'
     this.sharedService.setCustomerTableData(this.customertabledata)
   }
+downloadPDF(): void {
+  try {
+    const doc = new jsPDF();
+    const customerId = this.customerID || 'Unknown';
+
+    const missingFields: string[] = [];
+
+    if (!this.customertabledata.investorname?.trim()) missingFields.push('Investor Name');
+    if (!this.customertabledata.accountnumber) missingFields.push('Account Number');
+    if (!this.customertabledata.branchname?.trim()) missingFields.push('Branch Name');
+    if (!this.customertabledata.accounttype?.trim()) missingFields.push('Account Type');
+    if (!this.customertabledata.ifsccode?.trim()) missingFields.push('IFSC Code');
+    if (!this.customertabledata.bankholdername?.trim()) missingFields.push('Bank Holder Name');
+
+    if (missingFields.length > 0) {
+      alert('Please fill the mandatory fields:\n' + missingFields.join('\n'));
+      return;
+    }
+
+    const data: [string, string][] = [
+      ['Investor Name', this.customertabledata.investorname],
+      ['POA Execution', this.customertabledata.execute_through_poa],
+      ['Bank Name', this.customertabledata.bankname],
+      ['Account Number', this.customertabledata.accountnumber?.toString() || ''],
+      ['Re-Enter Account Number', this.customertabledata.re_enteraccountnumber?.toString() || ''],
+      ['Branch Name', this.customertabledata.branchname],
+      ['Account Type', this.customertabledata.accounttype],
+      ['MICR Number', this.customertabledata.micrnumber?.toString() || ''],
+      ['IFSC Code', this.customertabledata.ifsccode],
+      ['Bank Holder Name', this.customertabledata.bankholdername],
+      ['ACH Amount', this.customertabledata.achamount?.toString() || ''],
+      ['ACH From Date', this.customertabledata.achfromdate || ''],
+      ['ACH To Date', this.customertabledata.achtodate || ''],
+      ['Maximum Period', this.customertabledata.maximumperiod ? 'Yes' : 'No'],
+      ['Bank Code', this.customertabledata.bankcode],
+    ];
+
+    const filteredData = data.filter(([_, value]) =>
+      value !== null && value !== undefined && value.toString().trim() !== ''
+    );
+
+    if (filteredData.length === 0) {
+      alert("No customer data available to print.");
+      return;
+    }
+
+    autoTable(doc, {
+      head: [['Field', 'Value']],
+      body: filteredData,
+      startY: 20,
+    });
+
+    doc.save(`Customer_Record_${customerId}.pdf`);
+  } catch (err) {
+    console.error("PDF Generation failed:", err);
+    alert("An error occurred while generating the PDF. Please try again.");
+  }
+}
+
 
 
 
