@@ -1,12 +1,9 @@
-        using System.Data;
-        using ACH_api.models;
-        using Microsoft.AspNetCore.Mvc;
-        using Microsoft.Data.SqlClient;
-        using WebApplication1.models;
-        using System.Text.Json;
-
-
-
+    using System.Data;
+    using ACH_api.models;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Data.SqlClient;
+    using WebApplication1.models;
+    using System.Text.Json;
 
     namespace WebApplication1.Controllers
     {
@@ -40,15 +37,8 @@
             CommandType = CommandType.StoredProcedure
           };
 
-
-
           command.Parameters.AddWithValue("@Asflag", aCHrequestDto.Asflag ?? (object)DBNull.Value);
-
-
           command.Parameters.Add("@customerID", SqlDbType.Int).Value = aCHrequestDto.customerID;
-
-
-
 
           if (aCHrequestDto.Asflag == "save")
           {
@@ -100,6 +90,9 @@
           return Ok();
 
         }
+
+
+
 
         [HttpPost("get")]
         public IActionResult ACHloginGetData([FromBody] ACHresponseDto.Getdata getdata)
@@ -182,7 +175,10 @@
                 // Handle other flags (like "save") accordingly
             return BadRequest("Invalid flag value.");
             }
-        }
+          }
+
+
+
 
 
         [HttpPost("Edit")]
@@ -221,28 +217,25 @@
             editCommand.Parameters.AddWithValue("@achtodate", (object?)aCHEditDto.achtodate ?? DBNull.Value);
             editCommand.Parameters.AddWithValue("@mode_of_holder", (object?)aCHEditDto.mode_of_holder ?? DBNull.Value);
             editCommand.Parameters.AddWithValue("@bankcode", (object?)aCHEditDto.bankcode ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy3", (object?)aCHEditDto.dummy3 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy4", (object?)aCHEditDto.dummy4 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy5", (object?)aCHEditDto.dummy5 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy6", (object?)aCHEditDto.dummy6 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy7", (object?)aCHEditDto.dummy7 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy8", (object?)aCHEditDto.dummy8 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy9", (object?)aCHEditDto.dummy9 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy10", (object?)aCHEditDto.dummy10 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy11", (object?)aCHEditDto.dummy11 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy12", (object?)aCHEditDto.dummy12 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy13", (object?)aCHEditDto.dummy13 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy14", (object?)aCHEditDto.dummy14 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy15", (object?)aCHEditDto.dummy15 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy16", (object?)aCHEditDto.dummy16 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy17", (object?)aCHEditDto.dummy17 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy18", (object?)aCHEditDto.dummy18 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy19", (object?)aCHEditDto.dummy19 ?? DBNull.Value);
-        //editCommand.Parameters.AddWithValue("@dummy20", (object?)aCHEditDto.dummy20 ?? DBNull.Value);
-
-
-
-        editCommand.ExecuteNonQuery();
+            //editCommand.Parameters.AddWithValue("@dummy3", (object?)aCHEditDto.dummy3 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy4", (object?)aCHEditDto.dummy4 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy5", (object?)aCHEditDto.dummy5 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy6", (object?)aCHEditDto.dummy6 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy7", (object?)aCHEditDto.dummy7 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy8", (object?)aCHEditDto.dummy8 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy9", (object?)aCHEditDto.dummy9 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy10", (object?)aCHEditDto.dummy10 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy11", (object?)aCHEditDto.dummy11 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy12", (object?)aCHEditDto.dummy12 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy13", (object?)aCHEditDto.dummy13 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy14", (object?)aCHEditDto.dummy14 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy15", (object?)aCHEditDto.dummy15 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy16", (object?)aCHEditDto.dummy16 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy17", (object?)aCHEditDto.dummy17 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy18", (object?)aCHEditDto.dummy18 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy19", (object?)aCHEditDto.dummy19 ?? DBNull.Value);
+            //editCommand.Parameters.AddWithValue("@dummy20", (object?)aCHEditDto.dummy20 ?? DBNull.Value);
+            editCommand.ExecuteNonQuery();
           }
 
           // 2. Execute Locate operation to get updated data
@@ -347,6 +340,8 @@
         }
 
 
+
+
         [HttpGet("bankdetails/{customerId}")]
         public async Task<IActionResult> GetBankDetailsByCustomerIdAsync(int customerId)
         {
@@ -435,14 +430,8 @@
 
 
 
-
-
-
-
-
-
-
       }
+
     }
 
   

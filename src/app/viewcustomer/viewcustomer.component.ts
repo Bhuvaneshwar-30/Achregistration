@@ -5,6 +5,7 @@
     import { CustomerTableData } from '../interface';
     import { CommonModule } from '@angular/common';
     import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { resetFakeAsyncZone } from '@angular/core/testing';
 
 
     
@@ -17,6 +18,7 @@
     export class ViewcustomerComponent {
       customerId: number  | null = null;
       selectedFlag: string = '';
+    
       
     customertabledata:CustomerTableData={
     investorname : '',
@@ -43,18 +45,19 @@
     bankcode:''
     
   }
-      
+  
   constructor(private sharedService: SharedService , private router : Router){}
-
       Go(): void {
+
+
       if (this.customerId !== null && this.customerId > 0) {
         const selectedFlagNormalized = this.selectedFlag.trim();
-
+      
         if (!['Locate', 'save', 'Edit'].includes(selectedFlagNormalized)) {
           alert('Please select a mode');
           return;
         }
-
+        
         const httpOptions = {
           headers: new HttpHeaders({
             Authorization: 'my-auth-token',
@@ -161,7 +164,12 @@
         alert('Invalid ACH registration ID');
       }
     }
+  
+onFlagChange(): void {
+  console.log('Flag changed to:', this.selectedFlag);
+  this.customerId = null;
+}
 
 }
 
-    
+  

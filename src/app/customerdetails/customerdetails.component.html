@@ -35,9 +35,9 @@
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">CustomerID</strong></td>
           <td class="tblcol" *ngIf="customertabledata" ><input type="number" name="customerID" class="Common_input" id="customerID" placeholder="--customer id--" [(ngModel)]="customerID"  readonly></td>
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Investor Name</strong></td>
-          <td class="tblcol"  *ngIf="customertabledata"><input type="text" class="Common_input" name="investorname" id="Investorid" placeholder="--Investor Name--"[(ngModel)]="customertabledata.investorname"  [disabled]="isLocateMode"  required></td>
+          <td class="tblcol"  *ngIf="customertabledata"><input type="text" class="Common_input" name="investorname" id="Investorid" placeholder="--Investor Name--"[(ngModel)]="customertabledata.investorname"  (keypress)="allowOnlyAlphabets($event)" [disabled]="isLocateMode"  required></td>
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Mode Of Holding</strong></td>
-          <td class="tblcol" *ngIf="customertabledata" ><input type = "text" class = "Common_input" name = "modeofholding" id="mohId" placeholder="--Holder Name--"[(ngModel)]="customertabledata.mode_of_holder" [disabled]="isLocateMode" required></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type = "text" class = "Common_input" name = "modeofholding" id="mohId" placeholder="--Holder Name--"[(ngModel)]="customertabledata.mode_of_holder"  (keypress)="allowOnlyAlphabets($event)" [disabled]="isLocateMode" required></td>
         </tr>
 
 
@@ -68,6 +68,7 @@
                     id="accountnumber"
                     [(ngModel)]="customertabledata.accountnumber"
                     (change)="onAccountNumberSelectionChange()"
+                    (keypress)="allowOnlyNumbers($event)"
                     required>
               <option [ngValue]="null">--Choose Account Number--</option>
               <option *ngFor="let acc of filteredAccountNumbers" [ngValue]="acc.accountnumber">{{ acc.accountnumber }}</option>
@@ -81,7 +82,7 @@
           </td>
 
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Branch Name</strong></td>
-          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="branchname" id="brand" [(ngModel)]="customertabledata.branchname" [disabled]="isLocateMode"  placeholder ="--custom--" required/></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="branchname" id="brand" [(ngModel)]="customertabledata.branchname" (keypress)="allowOnlyAlphabets($event)" [disabled]="isLocateMode"  placeholder ="--custom--" required/></td>
         </tr>
         <tr class="tblrow">
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Account Type</strong></td>
@@ -94,21 +95,21 @@
             </select>
           </td>
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Re-enterAccount Number</strong></td>
-          <td class="tblcol" *ngIf="customertabledata" ><input type="number" class="Common_input" name="re_enteraccountnumber" id="Re-enterAccountid" [(ngModel)]="customertabledata.re_enteraccountnumber" [disabled]="isLocateMode"  placeholder ="--Re-enterAccount Number--" required/></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="number" class="Common_input" name="re_enteraccountnumber" id="Re-enterAccountid" [(ngModel)]="customertabledata.re_enteraccountnumber"  (keypress)="allowOnlyNumbers($event)" [disabled]="isLocateMode"  placeholder ="--Re-enterAccount Number--" required/></td>
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">MICR Number</strong></td>
           <td class="tblcol" *ngIf="customertabledata" ><input type="number" class="Common_input" name="micrnumber" id="micr" [(ngModel)]="customertabledata.micrnumber"placeholder ="--MICR NUmber--" [disabled]="isLocateMode" required></td>
         </tr>
         <tr class="tblrow">
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">IFSC CODE</strong></td>
-          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="ifsccode" id="ifsc"[(ngModel)]="customertabledata.ifsccode" [disabled]="isLocateMode" placeholder="--IFSC CODE--" required/></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="ifsccode" id="ifsc"[(ngModel)]="customertabledata.ifsccode" (keypress)="restrictSpecialChars($event)" [disabled]="isLocateMode" placeholder="--IFSC CODE--" required/></td>
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">Bank Holder Name</strong></td>
-          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="bankholdername" id="bankholder" [(ngModel)]="customertabledata.bankholdername" [disabled]="isLocateMode" placeholder="--Holder Name--"required/></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="bankholdername" id="bankholder" [(ngModel)]="customertabledata.bankholdername"  (keypress)="allowOnlyAlphabets($event)" [disabled]="isLocateMode" placeholder="--Holder Name--"required/></td>
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Bank Holder Name 1</strong></td>
-          <td class="tblcol" *ngIf="customertabledata"><input type="text" class="Common_input" name="bankholdername1" id="holder1"[(ngModel)]="customertabledata.bankholdername1" [disabled]="isLocateMode" placeholder="--Holder Name 1--"/></td>
+          <td class="tblcol" *ngIf="customertabledata"><input type="text" class="Common_input" name="bankholdername1" id="holder1"[(ngModel)]="customertabledata.bankholdername1"  (keypress)="allowOnlyAlphabets($event)" [disabled]="isLocateMode" placeholder="--Holder Name 1--"/></td>
         </tr>
         <tr class="tblrow">
           <td class="Common_color"><strong style="background-color:rgb(248, 248, 236);">Bank Holder Name 2</strong></td>
-          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="bankholdername2" id="holder2" [(ngModel)]="customertabledata.bankholdername2" [disabled]="isLocateMode" placeholder="--Holder Name 2--" /></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="text" class="Common_input" name="bankholdername2" id="holder2" [(ngModel)]="customertabledata.bankholdername2"  (keypress)="allowOnlyAlphabets($event)" [disabled]="isLocateMode" placeholder="--Holder Name 2--" /></td>
         </tr>
 
         <tr>
@@ -118,7 +119,7 @@
         </tr>
         <tr class="tblrow">
           <td class="Common_color"><strong style="color: red; background-color:rgb(248, 248, 236);">ACH Amount</strong></td>
-          <td class="tblcol" *ngIf="customertabledata" ><input type="int" class="Common_input" name="achamount" id="amount" [(ngModel)]="customertabledata.achamount" [disabled]="isLocateMode" placeholder="--Enter Amount--" required/></td>
+          <td class="tblcol" *ngIf="customertabledata" ><input type="int" class="Common_input" name="achamount" id="amount" [(ngModel)]="customertabledata.achamount"  (keypress)="allowOnlyNumbers($event)" [disabled]="isLocateMode" placeholder="--Enter Amount--" required/></td>
           <td class="Common_color"><strong style="color: red;background-color:rgb(248, 248, 236);">ACH From Date</strong></td>
             <td class="tblcol" *ngIf="customertabledata" ><input type="date" class="Common_input" name="achfromdate" id="fromdate" [(ngModel)]="customertabledata.achfromdate" [disabled]="isLocateMode" required/>
             </td>

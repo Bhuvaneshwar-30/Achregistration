@@ -96,28 +96,28 @@ export class CustomerdetailsComponent implements OnInit {
                   index === self.findIndex((t) => t.bankcode === value.bankcode)
               );
 
-                console.log('tableData from shared service:', tableData);
-              console.log('bankdata from shared service:', bankdata);
+                  console.log('tableData from shared service:', tableData);
+                  console.log('bankdata from shared service:', bankdata);
 
-                this.customertabledata = {
-                    investorname: tableData.investorname || '',
-                    execute_through_poa: tableData.execute_through_poa || 'no',
+                  this.customertabledata = {
+                  investorname: tableData.investorname || '',
+                  execute_through_poa: tableData.execute_through_poa || 'no',
 //                     achamount: tableData.achamount || null,
 //                     achfromdate: tableData.achfromdate || '',
 //                     achtodate: tableData.achtodate || '',
-                    maximumperiod: tableData.maximumperiod || false,
-                    mode_of_holder: tableData.mode_of_holder || '',
-                    Asflag: flag,
+                  maximumperiod: tableData.maximumperiod || false,
+                  mode_of_holder: tableData.mode_of_holder || '',
+                  Asflag: flag,
 //                     dummy3: '', dummy4: '', dummy5: '',
 //                     dummy6: '', dummy7: '', dummy8: '', dummy9: '', dummy10: '',
 //                     dummy11: '', dummy12: '', dummy13: '', dummy14: '', dummy15: '',
 //                     dummy16: '', dummy17: '', dummy18: '', dummy19: '', dummy20: '',
 
                     // Initial bank/account details from shared service
-                    bankcode: bankdata.bankcode || '',
-                    bankname: bankdata.bankname || '', // You can keep bankname populated or set to ''
-                    accountnumber: bankdata.accountnumber != null ? Number(bankdata.accountnumber) : null,
-                    re_enteraccountnumber: tableData.re_enteraccountnumber != null ? Number(tableData.re_enteraccountnumber) : null,
+                  bankcode: bankdata.bankcode || '',
+                  bankname: bankdata.bankname || '', // You can keep bankname populated or set to ''
+                  accountnumber: bankdata.accountnumber != null ? Number(bankdata.accountnumber) : null,
+                  re_enteraccountnumber: tableData.re_enteraccountnumber != null ? Number(tableData.re_enteraccountnumber) : null,
                     
 
                     // <<<--- CRITICAL CHANGE: INITIALIZE THESE AS BLANK/NULL --->>>
@@ -131,12 +131,8 @@ export class CustomerdetailsComponent implements OnInit {
                   achfromdate: bankdata.achfromdate || '',
                   achtodate: bankdata.achtodate || '',
                   achamount: bankdata.achamount != null ? bankdata.achamount : null,
-
-                
                 };
-                console.log('ngOnInit: customertabledata after initial assignment:', this.customertabledata);
-
-                
+                console.log('ngOnInit: customertabledata after initial assignment:', this.customertabledata);                
                 if (this.customertabledata.bankcode) {
                     this.onBankSelectionChange();
                     if (this.customertabledata.accountnumber !== null) { 
@@ -156,12 +152,8 @@ export class CustomerdetailsComponent implements OnInit {
           }
         });
        }
-      }
-
-
-  
+      }  
 }
-
 
   get isLocateMode(): boolean {
     return this.sharedService.isLocateMode;
@@ -193,6 +185,7 @@ export class CustomerdetailsComponent implements OnInit {
     }
   }
 
+
   onCheckboxChange(event: Event, fieldName: keyof CustomerTableData): void {
     const input = event.target as HTMLInputElement;
     if (fieldName === 'execute_through_poa') {
@@ -211,8 +204,8 @@ export class CustomerdetailsComponent implements OnInit {
     }
 
     if (formRef.invalid) {
-        alert("Please enter the missing fields!!");
-        return;
+      alert("Please enter the missing fields!!");
+      return;
     }
 
     if (this.customertabledata.micrnumber !== null) {
@@ -325,17 +318,13 @@ export class CustomerdetailsComponent implements OnInit {
         }
         alert("Form submission failed. Check console for details."); 
       },
-      complete: () => {
-        
-      }
+      complete: () => {}
     });
   }
 
   onBankSelectionChange(): void {
     console.log('Selected bank code:', this.customertabledata.bankcode);
     console.log('Current Asflag in onBankSelectionChange:', this.customertabledata.Asflag);
-
-    
     this.customertabledata.accountnumber = null; 
     this.filteredAccountNumbers = []; 
     this.resetBankDetailsFields(); 
@@ -387,7 +376,6 @@ export class CustomerdetailsComponent implements OnInit {
     this.customertabledata.achamount = account.achamount;
     this.customertabledata.achfromdate = account.achfromdate ? account.achfromdate.slice(0, 10) : '';
     this.customertabledata.achtodate = account.achtodate ? account.achtodate.slice(0, 10) : '';
-
   }
 
  
@@ -402,7 +390,6 @@ export class CustomerdetailsComponent implements OnInit {
     this.customertabledata.achamount = null;
     this.customertabledata.achfromdate = '';
     this.customertabledata.achtodate = '';
-   
   }
 
  
@@ -418,8 +405,7 @@ export class CustomerdetailsComponent implements OnInit {
         console.warn('Selected account number not found in filtered list.');
         this.resetBankDetailsFields(); 
       }
-    } else {
-     
+    } else { 
       this.resetBankDetailsFields();
     }
   }
@@ -574,7 +560,34 @@ openExportOptions(): void {
       alert("Invalid choice. Please type 'pdf', 'excel', or 'cancel'.");
       break;
   }
+
 }
+
+  // Allow only alphanumeric characters and space
+restrictSpecialChars(event: KeyboardEvent): void {
+  const inputChar = event.key;
+  const regex = /^[a-zA-Z0-9\s]*$/;
+  if (!regex.test(inputChar)) {
+    event.preventDefault();
+  }
+}
+
+// Allow only numbers
+allowOnlyNumbers(event: KeyboardEvent): void {
+  const inputChar = event.key;
+  if (!/^\d$/.test(inputChar)) {
+    event.preventDefault();
+  }
+}
+
+// Allow only alphabets and space
+allowOnlyAlphabets(event: KeyboardEvent): void {
+  const inputChar = event.key;
+  if (!/^[a-zA-Z\s]$/.test(inputChar)) {
+    event.preventDefault();
+  }
+}
+
 
 
 

@@ -18,9 +18,9 @@
   <table class="table"cellspacing="0" cellpadding="0">
     <tr class="radio_row">
       <td colspan="3" style="padding-left: 10px; ">
-        <label style="background-color:rgb(248, 248, 236);" ><input type="radio" name="option" value="Locate"[(ngModel)]="selectedFlag"> Locate</label>&nbsp;&nbsp;
-        <label style="background-color:rgb(248, 248, 236);"><input type="radio" name="option" value="save"[(ngModel)]="selectedFlag "> New</label>&nbsp;&nbsp;
-        <label style="background-color:rgb(248, 248, 236);"><input type="radio" name="option" value="Edit"[(ngModel)]="selectedFlag"> Edit</label>
+        <label style="background-color:rgb(248, 248, 236);" > <input type="radio" name="option" value="Locate" [(ngModel)]="selectedFlag" (change)="onFlagChange()"> Locate</label>&nbsp;&nbsp;
+        <label style="background-color:rgb(248, 248, 236);"><input type="radio" name="option" value="save" [(ngModel)]="selectedFlag" (change)="onFlagChange()">New</label>&nbsp;&nbsp;
+        <label style="background-color:rgb(248, 248, 236);"><input type="radio" name="option" value="Edit" [(ngModel)]="selectedFlag" (change)="onFlagChange()">Edit</label>
       </td>
     </tr>
 
