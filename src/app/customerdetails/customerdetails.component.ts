@@ -48,10 +48,6 @@ export class CustomerdetailsComponent implements OnInit {
     maximumperiod: false,
     mode_of_holder: '',
     Asflag: '',
-    // dummy3: '', dummy4: '', dummy5: '',
-    // dummy6: '', dummy7: '', dummy8: '', dummy9: '', dummy10: '',
-    // dummy11: '', dummy12: '', dummy13: '', dummy14: '', dummy15: '',
-    // dummy16: '', dummy17: '', dummy18: '', dummy19: '', dummy20: '',
     bankcode:'' 
   };
 
@@ -71,6 +67,16 @@ export class CustomerdetailsComponent implements OnInit {
    if (!isNaN(this.customerID)) {
        if (flag === 'save') {
           this.resetFormToNew();
+          this.sharedService.getthree_field(this.customerID.toString()).subscribe({
+            next: (res) => {
+              const achData = res.basicDetails?.[0];
+              if (achData) {
+                this.customertabledata.investorname = achData.investorname || '';
+                this.customertabledata.execute_through_poa = achData.execute_through_poa || 'no';
+                this.customertabledata.mode_of_holder = achData.mode_of_holder || '';
+              }
+            },
+          });
           this.sharedService.getDistinctBankNames().subscribe({
               next: (bankname) => {
                 this.bankname = bankname;
@@ -102,20 +108,13 @@ export class CustomerdetailsComponent implements OnInit {
                   this.customertabledata = {
                   investorname: tableData.investorname || '',
                   execute_through_poa: tableData.execute_through_poa || 'no',
-//                     achamount: tableData.achamount || null,
-//                     achfromdate: tableData.achfromdate || '',
-//                     achtodate: tableData.achtodate || '',
                   maximumperiod: tableData.maximumperiod || false,
                   mode_of_holder: tableData.mode_of_holder || '',
                   Asflag: flag,
-//                     dummy3: '', dummy4: '', dummy5: '',
-//                     dummy6: '', dummy7: '', dummy8: '', dummy9: '', dummy10: '',
-//                     dummy11: '', dummy12: '', dummy13: '', dummy14: '', dummy15: '',
-//                     dummy16: '', dummy17: '', dummy18: '', dummy19: '', dummy20: '',
 
                     // Initial bank/account details from shared service
                   bankcode: bankdata.bankcode || '',
-                  bankname: bankdata.bankname || '', // You can keep bankname populated or set to ''
+                  bankname: bankdata.bankname || '',
                   accountnumber: bankdata.accountnumber != null ? Number(bankdata.accountnumber) : null,
                   re_enteraccountnumber: tableData.re_enteraccountnumber != null ? Number(tableData.re_enteraccountnumber) : null,
                     
@@ -354,12 +353,6 @@ export class CustomerdetailsComponent implements OnInit {
       );
       this.customertabledata.bankname = selectedBankForName ? selectedBankForName.bankname : '';
       
-      // If there's only one account for this bank, pre-select it and populate fields
-      // if (this.filteredAccountNumbers.length === 1) {
-      //   this.customertabledata.accountnumber = this.filteredAccountNumbers[0].accountnumber;
-      //   this.populateOtherFields(this.filteredAccountNumbers[0]);
-      // }
-      // If multiple accounts, user needs to select. Fields are already reset above.
     }
   }
 
@@ -434,10 +427,6 @@ export class CustomerdetailsComponent implements OnInit {
       achtodate: null,
       maximumperiod: false,
       mode_of_holder: preservedModeOfHolder,
-      // dummy3: '', dummy4: '', dummy5: '',
-      // dummy6: '', dummy7: '', dummy8: '', dummy9: '', dummy10: '',
-      // dummy11: '', dummy12: '', dummy13: '', dummy14: '', dummy15: '',
-      // dummy16: '', dummy17: '', dummy18: '', dummy19: '', dummy20: ''
     };
   console.log('resetFormToNew: customertabledata.Asflag after assignment = ', this.customertabledata?.Asflag);
     console.log('resetFormToNew: sharedService.getFlag() after reset = ', this.sharedService.getFlag());
@@ -587,12 +576,6 @@ allowOnlyAlphabets(event: KeyboardEvent): void {
     event.preventDefault();
   }
 }
-
-
-
-
-
-
 
 
 }

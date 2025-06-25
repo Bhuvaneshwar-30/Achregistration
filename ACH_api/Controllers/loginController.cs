@@ -58,24 +58,6 @@
             command.Parameters.AddWithValue("@achfromdate", aCHrequestDto.achfromdate ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@achtodate", aCHrequestDto.achtodate ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@mode_of_holder", aCHrequestDto.mode_of_holder ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy3", aCHrequestDto.dummy3 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy4", aCHrequestDto.dummy4 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy5", aCHrequestDto.dummy5 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy6", aCHrequestDto.dummy6 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy7", aCHrequestDto.dummy7 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy8", aCHrequestDto.dummy8 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy9", aCHrequestDto.dummy9 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy10", aCHrequestDto.dummy10 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy11", aCHrequestDto.dummy11 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy12", aCHrequestDto.dummy12 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy13", aCHrequestDto.dummy13 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy14", aCHrequestDto.dummy14 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy15", aCHrequestDto.dummy15 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy16", aCHrequestDto.dummy16 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy17", aCHrequestDto.dummy17 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy18", aCHrequestDto.dummy18 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy19", aCHrequestDto.dummy19 ?? (object)DBNull.Value);
-            //command.Parameters.AddWithValue("@dummy20", aCHrequestDto.dummy20 ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@bankcode", aCHrequestDto.bankcode ?? (object)DBNull.Value);
           }
 
@@ -217,24 +199,6 @@
             editCommand.Parameters.AddWithValue("@achtodate", (object?)aCHEditDto.achtodate ?? DBNull.Value);
             editCommand.Parameters.AddWithValue("@mode_of_holder", (object?)aCHEditDto.mode_of_holder ?? DBNull.Value);
             editCommand.Parameters.AddWithValue("@bankcode", (object?)aCHEditDto.bankcode ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy3", (object?)aCHEditDto.dummy3 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy4", (object?)aCHEditDto.dummy4 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy5", (object?)aCHEditDto.dummy5 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy6", (object?)aCHEditDto.dummy6 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy7", (object?)aCHEditDto.dummy7 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy8", (object?)aCHEditDto.dummy8 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy9", (object?)aCHEditDto.dummy9 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy10", (object?)aCHEditDto.dummy10 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy11", (object?)aCHEditDto.dummy11 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy12", (object?)aCHEditDto.dummy12 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy13", (object?)aCHEditDto.dummy13 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy14", (object?)aCHEditDto.dummy14 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy15", (object?)aCHEditDto.dummy15 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy16", (object?)aCHEditDto.dummy16 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy17", (object?)aCHEditDto.dummy17 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy18", (object?)aCHEditDto.dummy18 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy19", (object?)aCHEditDto.dummy19 ?? DBNull.Value);
-            //editCommand.Parameters.AddWithValue("@dummy20", (object?)aCHEditDto.dummy20 ?? DBNull.Value);
             editCommand.ExecuteNonQuery();
           }
 
@@ -263,25 +227,6 @@
                 investorname = achRow["investorname"]?.ToString(),
                 execute_through_poa = achRow["execute_through_poa"]?.ToString(),
                 mode_of_holder = achRow["mode_of_holder"]?.ToString(),
-                //re_enteraccountnumber = achRow["re_enteraccountnumber"]?.ToString(),
-                //dummy3 = achRow["dummy3"]?.ToString(),
-                //dummy4 = achRow["dummy4"]?.ToString(),
-                //dummy5 = achRow["dummy5"]?.ToString(),
-                //dummy6 = achRow["dummy6"]?.ToString(),
-                //dummy7 = achRow["dummy7"]?.ToString(),
-                //dummy8 = achRow["dummy8"]?.ToString(),
-                //dummy9 = achRow["dummy9"]?.ToString(),
-                //dummy10 = achRow["dummy10"]?.ToString(),
-                //dummy11 = achRow["dummy11"]?.ToString(),
-                //dummy12 = achRow["dummy12"]?.ToString(),
-                //dummy13 = achRow["dummy13"]?.ToString(),
-                //dummy14 = achRow["dummy14"]?.ToString(),
-                //dummy15 = achRow["dummy15"]?.ToString(),
-                //dummy16 = achRow["dummy16"]?.ToString(),
-                //dummy17 = achRow["dummy17"]?.ToString(),
-                //dummy18 = achRow["dummy18"]?.ToString(),
-                //dummy19 = achRow["dummy19"]?.ToString(),
-                //dummy20 = achRow["dummy20"]?.ToString(),
               };
 
           
@@ -427,12 +372,44 @@
 
             return Ok(bankList);
           }
+          [HttpPost("newmode")]
+          public IActionResult GetBasicCustomerDetails([FromBody] newDto getdata)
+          {
+            using var connection = GetConnection();
+            connection.Open();
+
+            using var command = new SqlCommand("sp_ACHloginSavedData", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Asflag", "new");
+            command.Parameters.AddWithValue("@customerID", getdata.customerID);
+
+            using var reader = command.ExecuteReader();
+
+            var basicDetails = new List<object>();
+            while (reader.Read())
+            {
+              basicDetails.Add(new
+              {
+                investorname = reader["investorname"]?.ToString() ?? "",
+                execute_through_poa = reader["execute_through_poa"]?.ToString() ?? "",
+                mode_of_holder = reader["mode_of_holder"]?.ToString() ?? ""
+              });
+            }
+
+            if (!basicDetails.Any())
+            {
+              return NotFound(new { message = "No data found for the given customer ID." });
+            }
+
+            return Ok(new { basicDetails });
+          }
 
 
 
-      }
 
-    }
+  }
+
+}
 
   
 

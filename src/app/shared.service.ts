@@ -106,7 +106,12 @@
   getbankdetailsdata(): BankDetails | null {
       return this.bankdetails;
   }
-
-    
+  getthree_field(customerID: string) {
+      return this.http.post<any>('https://localhost:7069/api/newmode', {
+        customerID: customerID,
+         flag: 'new' 
+  });
   }
+    
+}
 
